@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "drbench"
+version = "0.1.0"
+description = "Evaluate any OpenAI-compatible model on DRPixelBench"
+readme = "README.md"
+requires-python = ">=3.9"
+# The client deliberately has no required dependencies: it speaks HTTP+JSON with the
+# standard library, so `python -m drbench.eval` works in a bare interpreter.
+dependencies = []
+
+[project.optional-dependencies]
+# certifi fixes TLS verification on machines with a stale CA bundle (common on macOS).
+client = ["certifi"]
+# The search server (server/search_server.py), which also needs a GPU for the query encoders.
+server = ["numpy", "pillow", "torch", "transformers>=4.57", "qwen-vl-utils>=0.0.13", "pymupdf"]
+
+[tool.setuptools]
+packages = ["drbench"]
